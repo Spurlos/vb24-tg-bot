@@ -1,0 +1,33 @@
+{
+  "name": "vb24-tg-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node index.mjs",
+    "lint": "eslint --fix .",
+    "format": "prettier -w ."
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "heroku-logger": "^0.3.3",
+    "ioredis": "^4.27.5",
+    "lodash.merge": "^4.6.2",
+    "node-fetch-cookies": "^2.0.2",
+    "ssl-root-cas": "^1.3.1",
+    "telegraf": "^4.3.0",
+    "toad-scheduler": "^1.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.1"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
