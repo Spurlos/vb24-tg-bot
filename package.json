@@ -10,6 +10,7 @@
     "format": "prettier -w ."
   },
   "dependencies": {
+    "dedent-js": "^1.0.1",
     "dotenv": "^10.0.0",
     "heroku-logger": "^0.3.3",
     "ioredis": "^4.27.5",
