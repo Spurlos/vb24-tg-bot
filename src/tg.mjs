@@ -3,10 +3,10 @@ import logger from "heroku-logger";
 
 const bot = new Telegraf(process.env.TG_BOT_TOKEN);
 
-function sendMessage(id, text) {
+async function sendMessage(id, text) {
   logger.info("Sending message to user", { module: "tg", id });
 
-  return bot.telegram.sendMessage(id, text, {
+  await bot.telegram.sendMessage(id, text, {
     parse_mode: "HTML",
   });
 }

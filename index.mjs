@@ -25,12 +25,15 @@ async function sendHistoryUpdates() {
       logger.info("New transaction ID(s)", {
         newTransactionIds: newItems.map(({ id }) => id),
       });
-      newItems.forEach((item) => {
+      const newItemsLength = newItems.length;
+      for (let i = 0; i < newItemsLength; i += 1) {
+        const item = newItems[i];
         logger.info("Sending message for transaction", {
           transactionId: item.id,
         });
-        sendMessage(process.env.TG_CHAT_ID, formatHistoryMessage(item));
-      });
+        // eslint-disable-next-line no-await-in-loop
+        await sendMessage(process.env.TG_CHAT_ID, formatHistoryMessage(item));
+      }
     }
   }
 
