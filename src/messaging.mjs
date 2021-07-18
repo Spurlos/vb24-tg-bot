@@ -57,14 +57,29 @@ function formatOperationMessage(item) {
 
 function formatRegularMessage(item) {
   let accountCurrencyAmount = "";
-  const { merchantCategory, totalAmount, transAmount, location } = item;
+  const {
+    isContactless,
+    isTokenPay,
+    location,
+    merchantCategory,
+    totalAmount,
+    transAmount,
+  } = item;
+
+  let paymentMethod = "";
+  if (isContactless) {
+    paymentMethod = "💳";
+    if (isTokenPay) {
+      paymentMethod = "📲";
+    }
+  }
 
   if (transAmount.currency !== totalAmount.currency) {
     accountCurrencyAmount = ` (${totalAmount.value} <b>${totalAmount.currency}</b>)`;
   }
 
   const title = location.merchant;
-  let body = `${transAmount.value} <b>${transAmount.currency}</b>${accountCurrencyAmount}`;
+  let body = `${transAmount.value} <b>${transAmount.currency}</b>${accountCurrencyAmount} ${paymentMethod}`;
 
   if (location.country && location.city) {
     body += `\n<i>Location</i>: ${location.country} ${location.city}`;
