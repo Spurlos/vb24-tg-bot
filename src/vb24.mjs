@@ -131,4 +131,17 @@ async function getHistory() {
     .then((historyResponse) => historyResponse.json());
 }
 
-export default getHistory;
+async function getContracts() {
+  await ensureSession();
+  logger.debug("Begin fetching contracts", { module: "vb24" });
+
+  return fetch(
+    cookieJar,
+    `${appEndpoint}/api/v2/contracts`,
+    commonRequestOptions
+  )
+    .then(checkHttpStatus)
+    .then((historyResponse) => historyResponse.json());
+}
+
+export { getHistory, getContracts };

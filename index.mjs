@@ -1,7 +1,7 @@
 import "./src/config.cjs";
 import logger from "heroku-logger";
 import { createHash } from "crypto";
-import getHistory from "./src/vb24.mjs";
+import { getHistory } from "./src/vb24.mjs";
 import sendMessage from "./src/tg.mjs";
 import scheduleTask from "./src/scheduler.mjs";
 import StorageManagerService from "./src/storage/storageManagerService.js";

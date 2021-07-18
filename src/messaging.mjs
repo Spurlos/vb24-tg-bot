@@ -1,17 +1,62 @@
 import logger from "heroku-logger";
 import dedent from "dedent-js";
+import { getContracts } from "./vb24.mjs";
+import StorageManagerService from "./storage/storageManagerService.js";
+
+const contractsKey = "contracts";
+const storage = new StorageManagerService().getStorage();
+let contracts;
+
+storage.getKey(contractsKey).then((storedData) => {
+  if (storedData) {
+    contracts = storedData;
+    logger.debug("Got contracts data from storage", {
+      module: "messaging",
+    });
+  } else {
+    logger.debug("No contracts data stored. Trying to get from API", {
+      module: "messaging",
+    });
+    getContracts().then((fetchedData) => {
+      contracts = fetchedData;
+      storage.storeKey(contractsKey, fetchedData);
+      logger.debug("Got contracts data from API", {
+        module: "messaging",
+      });
+    });
+  }
+});
+
+function getContractInfo(contractId) {
+  const contract = contracts.find(({ id }) => id === contractId);
+  let type;
+  switch (contract.type) {
+    case "card":
+      type = "💳";
+      break;
+
+    case "cardAccount":
+      type = "🏦";
+      break;
+
+    default:
+      type = "";
+  }
+
+  return `${type} ${contract.name}`;
+}
 
 function formatOperationMessage(item) {
   let title;
   let body;
   const {
     description,
-    operationType,
-    totalAmount,
-    transAmount,
-    service,
     fees,
     location,
+    operationType,
+    service,
+    totalAmount,
+    transAmount,
   } = item;
 
   switch (operationType) {
@@ -48,7 +93,11 @@ function formatOperationMessage(item) {
       break;
 
     default:
-      logger.warn("Unknown operation type", { id: item.id, operationType });
+      logger.warn("Unknown operation type", {
+        id: item.id,
+        operationType,
+        module: "messaging",
+      });
   }
   body += `\n<i>Type</i>: ${operationType}`;
 
@@ -109,12 +158,13 @@ function formatHistoryMessage(item) {
         <b>${title}</b>
         
         ${body}
+        ${getContractInfo(item.contractId)}
         
         at ${convertTZ(item.operationTime, process.env.TIMEZEONE)}
       `;
     }
   } catch (exception) {
-    logger.warn(exception.message, { item });
+    logger.warn(exception.message, { item, module: "messaging" });
     message = dedent`
       Error: Could not process transaction message
   
