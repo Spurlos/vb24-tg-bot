@@ -7,9 +7,9 @@ class RedisStorage {
     logger.info("Redis client initialized", { module: "redisStorage" });
   }
 
-  storeKey(key, data) {
+  setKey(key, data) {
     this.client.set(key, JSON.stringify(data), (error) => {
-      logger.debug("Set callback execution", { module: "redisStorage" });
+      logger.debug("Set callback execution", { key, module: "redisStorage" });
       if (error) {
         logger.error(error.message);
       }
@@ -22,12 +22,12 @@ class RedisStorage {
     try {
       const value = await this.client.get(key);
 
-      logger.debug("Get executed", { module: "redisStorage" });
+      logger.debug("Get executed", { key, module: "redisStorage" });
       data = JSON.parse(value);
     } catch (exception) {
       logger.warn(exception.message);
       logger.warn("Resetting corrupted key", { module: "redisStorage", key });
-      this.storeKey(key, JSON.stringify({}));
+      this.setKey(key, JSON.stringify({}));
     }
 
     return data;

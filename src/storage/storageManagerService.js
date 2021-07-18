@@ -15,4 +15,4 @@ class StorageManagerService {
   }
 }
 
-export default StorageManagerService;
+export default new StorageManagerService();

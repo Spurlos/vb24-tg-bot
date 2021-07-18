@@ -4,7 +4,7 @@ import { getContracts } from "./vb24.mjs";
 import StorageManagerService from "./storage/storageManagerService.js";
 
 const contractsKey = "contracts";
-const storage = new StorageManagerService().getStorage();
+const storage = StorageManagerService.getStorage();
 let contracts;
 
 storage.getKey(contractsKey).then((storedData) => {
@@ -19,7 +19,7 @@ storage.getKey(contractsKey).then((storedData) => {
     });
     getContracts().then((fetchedData) => {
       contracts = fetchedData;
-      storage.storeKey(contractsKey, fetchedData);
+      storage.setKey(contractsKey, fetchedData);
       logger.debug("Got contracts data from API", {
         module: "messaging",
       });

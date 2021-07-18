@@ -9,7 +9,7 @@ import formatHistoryMessage from "./src/messaging.mjs";
 
 const historyKey = "historyIds";
 
-const storage = new StorageManagerService().getStorage();
+const storage = StorageManagerService.getStorage();
 
 function getSha1(item) {
   const hash = createHash("sha1");
@@ -48,7 +48,7 @@ async function sendHistoryUpdates() {
     }
   }
 
-  storage.storeKey(
+  storage.setKey(
     historyKey,
     history.map((item) => getSha1(item))
   );

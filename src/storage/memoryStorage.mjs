@@ -5,7 +5,7 @@ class MemoryStorage {
     this.memoryStorage = {};
   }
 
-  storeKey(key, data) {
+  setKey(key, data) {
     this.memoryStorage[key] = JSON.stringify(data);
     logger.debug("Set memory key value", { module: "memoryStorage", key });
   }
