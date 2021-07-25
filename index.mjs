@@ -13,8 +13,10 @@ const storage = StorageManagerService.getStorage();
 
 function getSha1(item) {
   const hash = createHash("sha1");
-  ["operationTime", "description", "contractId"].forEach((key) =>
-    hash.update(item[key])
+  ["totalAmount", "description", "contractId"].forEach((key) =>
+    typeof item[key] === "string"
+      ? hash.update(item[key])
+      : hash.update(JSON.stringify(item[key]))
   );
   return hash.digest("hex");
 }
