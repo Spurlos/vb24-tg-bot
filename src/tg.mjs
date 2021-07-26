@@ -11,6 +11,7 @@ async function sendMessage(id, text) {
   });
 }
 
+logger.info("Starting bot");
 bot.launch();
 
 // Enable graceful stop

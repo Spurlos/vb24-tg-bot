@@ -56,5 +56,4 @@ async function sendHistoryUpdates() {
   );
 }
 
-logger.info("Starting bot");
 scheduleTask(sendHistoryUpdates, process.env.POLLING_TIME_SEC);
