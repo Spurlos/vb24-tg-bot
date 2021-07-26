@@ -142,7 +142,17 @@ function formatRegularMessage(item) {
 }
 
 function convertTZ(date, timezoneString) {
-  return new Date(date).toLocaleString("en-GB", { timeZone: timezoneString });
+  logger.debug("Date from history", { date, module: "messaging" });
+  const convertedDate = new Date(date).toLocaleString("en-GB", {
+    timeZone: timezoneString,
+  });
+  logger.debug("Converted date", {
+    convertedDate,
+    timezoneString,
+    module: "messaging",
+  });
+
+  return convertedDate;
 }
 
 function formatHistoryMessage(item) {
