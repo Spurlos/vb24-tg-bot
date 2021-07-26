@@ -160,7 +160,7 @@ function formatHistoryMessage(item) {
         ${body}
         ${getContractInfo(item.contractId)}
         
-        at ${convertTZ(item.operationTime, process.env.TIMEZEONE)}
+        at ${convertTZ(item.operationTime, process.env.TIMEZONE)}
       `;
     }
   } catch (exception) {
